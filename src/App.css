@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.jumbotron {
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+  background-color: #e9ecef;
+  border-radius: .3rem;
+}
+
+.bg-photo {
+  background-image: url('../public/pool_cat.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 1;
+}
