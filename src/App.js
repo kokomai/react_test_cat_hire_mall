@@ -5,10 +5,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav} from 'react-bootstrap';
 import { Component, useState } from 'react';
 import { itemData } from './data';
-import { Link, Routes, Route, Switch } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
+import { Detail } from './Detail';
 
 function App() {
   let [items, itemsCh] = useState(itemData);
+  let [nowPage, nowPageCh] = useState("/");
+
+  const changePage = function(url) {
+    nowPageCh()
+    return url;
+  }
 
   return (
     <div className="App">
@@ -17,8 +24,8 @@ function App() {
         <Navbar.Brand href="/">떼껄룩 고용 사이트</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Nav.Link href="/detail">Detail</Nav.Link>
+          <Nav.Link href="/others">Others</Nav.Link>
         </Nav>
         </Container>
       </Navbar>
@@ -46,27 +53,13 @@ function App() {
           }>
         </Route>
         
-        <Route path="/detail" 
+        <Route path="/detail/:id" 
           element=
           { 
-            <div className="container">
-              <div className="row">
-                <div className="col-md-6">
-                  <img src={ "/cat" + items[0].id + ".jpeg" } width="100%"></img>
-                </div>
-                <div className="col-md-6">
-                  <h4 className="col-md-6 mt-4">상품명</h4>
-                  <p>상품 설명</p>
-                  <p>39800원</p>
-                  <button className="btn btn-danger">고용하기</button>
-                </div>
-              </div>
-            </div> 
+             <Detail item={items}></Detail>
           }>
         </Route>
       </Routes>
-
-      
     </div>
   );
 }
