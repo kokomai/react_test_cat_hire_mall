@@ -4,14 +4,22 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav} from 'react-bootstrap';
 import { Component, useState } from 'react';
-import { itemData } from './data';
+// import { itemData } from './data';
 import { Link, Routes, Route } from 'react-router-dom';
 import { Detail } from './Detail';
+import axios from 'axios';
 
 function App() {
-  let [items, itemsCh] = useState(itemData);
+  let [items, itemsCh] = useState({});
   let [nowPage, nowPageCh] = useState("/");
-
+  //axios test 
+  axios
+    .get("/hello", {})
+    .then((res) => {
+      console.log(res);
+      itemsCh(res.data.test);
+      console.log(items);
+  });
   const changePage = function(url) {
     nowPageCh()
     return url;
