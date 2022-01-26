@@ -3,7 +3,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav} from 'react-bootstrap';
-import { Component, useState } from 'react';
+import { Component, useEffect, useState } from 'react';
 // import { itemData } from './data';
 import { Link, Routes, Route } from 'react-router-dom';
 import { Detail } from './Detail';
@@ -12,18 +12,24 @@ import axios from 'axios';
 function App() {
   let [items, itemsCh] = useState({});
   let [nowPage, nowPageCh] = useState("/");
-  //axios test 
-  axios
-    .get("/hello", {})
-    .then((res) => {
-      console.log(res);
-      itemsCh(res.data.test);
-      console.log(items);
-  });
+
+  const getItems = function() {
+    //axios test 
+    axios
+      .get("/hello", {})
+      .then(({ data }) => {
+        itemsCh(data.test);
+      });  
+  }
+  
   const changePage = function(url) {
     nowPageCh()
     return url;
   }
+
+  useEffect(() => {
+    getItems();
+  }, []);
 
   return (
     <div className="App">
@@ -52,9 +58,11 @@ function App() {
               </div>
               <div className="row">
                 {
-                  items.map((obj, idx) => {
-                    return <Item key={ idx } item={ obj }/>
-                  })  
+                  items.map
+                  ? items.map((obj, idx) => {
+                      return <Item key={ idx } item={ obj }/>
+                    })
+                  : <div>닝겐, 아쉽지만 상품이 없다네..</div>  
                 }
               </div>
             </div>
@@ -75,7 +83,7 @@ function App() {
 function Item(props) {
   return (
     <div className="col-md-4">
-      <img alt="상품이미지" src={"/cat" + props.item.id + ".jpeg"} width={"100%"}></img>
+      <img alt="상품이미지" src={`/cat${props.item.id}.jpeg`} width={"100%"}></img>
       <h4>상품명: {props.item.title} (고용번호: {props.item['id']})</h4>
       <p>상품설명: {props.item['content']}</p>
       <p>가격: {props.item['price']}</p>
