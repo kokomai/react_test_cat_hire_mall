@@ -11,7 +11,6 @@ import axios from 'axios';
 
 function App() {
   let [items, itemsCh] = useState({});
-  let [nowPage, nowPageCh] = useState("/");
 
   const getItems = function() {
     //axios test 
@@ -22,11 +21,7 @@ function App() {
       });  
   }
   
-  const changePage = function(url) {
-    nowPageCh()
-    return url;
-  }
-
+  // axios 호출시 useEffect 사용
   useEffect(() => {
     getItems();
   }, []);
