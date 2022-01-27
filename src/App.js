@@ -52,7 +52,7 @@ function App() {
                   ? items.map((obj, idx) => {
                       return <Item key={ idx } item={ obj }/>
                     })
-                  : <div>닝겐, 아쉽지만 상품이 없다네..</div>  
+                  : <div>닝겐, 아쉽지만 지금 노는 껄룩이가 없다네..</div>  
                 }
               </div>
             </div>
