@@ -11,19 +11,14 @@ import axios from 'axios';
 
 function App() {
   let [items, itemsCh] = useState({});
-
-  const getItems = function() {
-    //axios test 
+  
+  // axios 호출시 useEffect 사용
+  useEffect(() => {
     axios
       .get("/hello", {})
       .then(({ data }) => {
         itemsCh(data.test);
-      });  
-  }
-  
-  // axios 호출시 useEffect 사용
-  useEffect(() => {
-    getItems();
+      });
   }, []);
 
   return (
