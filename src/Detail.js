@@ -8,6 +8,7 @@ function Detail(props) {
     const searchItem = function(id) {
         let list = props.item;
         let result = {};
+        console.log(list);
         
         for(let item of list) {
            if(item.id === Math.round(id)) {

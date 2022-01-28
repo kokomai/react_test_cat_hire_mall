@@ -14,6 +14,7 @@ function App() {
   
   // axios 호출시 useEffect 사용
   useEffect(() => {
+    console.log("abc");
     axios
       .get("/hello", {})
       .then(({ data }) => {
