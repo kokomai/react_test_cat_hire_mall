@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 function Detail(props) {
     let navigate = useNavigate();
     let { id } = useParams();
-
+    console.log(props);
     const searchItem = function(id) {
         let list = props.item;
         let result = {};
