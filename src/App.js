@@ -11,18 +11,16 @@ import axios from 'axios';
 
 function App() {
   let [items, setItems] = useState([]);
-
+  
+  async function getItems() {
+    let res = await axios.get("/hello");
+    console.log(res);
+    setItems(res.data.test);
+  }
   // axios 호출시 useEffect 사용
   useEffect(() => {
-    axios
-    .get("/hello", {})
-    .then(({ data }) => {
-        console.log(data)
-        setItems(data.test);
-        console.log(items)
-      });
+    getItems();
   }, []);
-  console.log("???", items)
 
   return (
     <div className="App">
@@ -36,7 +34,6 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
-
       <Routes>
         <Route path="/"
           element=
@@ -51,7 +48,7 @@ function App() {
               </div>
               <div className="row">
                 {
-                  items.map
+                  items.length !== 0
                     ? items.map((obj, idx) => {
                       return <Item key={idx} item={obj} />
                     })
