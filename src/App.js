@@ -5,21 +5,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { Component, useEffect, useState } from 'react';
 // import { itemData } from './data';
-import { Link, Routes, Route } from 'react-router-dom';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import { Detail } from './Detail';
 import axios from 'axios';
 
 function App() {
-  let [items, setItems] = useState([]);
-  
-  async function getItems() {
-    let res = await axios.get("/hello");
-    console.log(res);
-    setItems(res.data.test);
-  }
+  const [items, setItems] = useState([]);
+
   // axios 호출시 useEffect 사용
   useEffect(() => {
-    getItems();
+    let isFirst = true;
+
+    async function getItems() {
+      let res = await axios.get("/hello");
+      setItems(res.data.test);
+    }
+    if(isFirst) {
+      getItems();
+    }
+    return () => {
+      isFirst = false;
+    }
   }, []);
 
   return (
@@ -50,7 +56,7 @@ function App() {
                 {
                   items.length !== 0
                     ? items.map((obj, idx) => {
-                      return <Item key={idx} item={obj} />
+                      return <Item key={idx} item={obj}/>
                     })
                     : <div>닝겐, 아쉽지만 지금 노는 껄룩이가 없다네..</div>
                 }
@@ -71,8 +77,14 @@ function App() {
 }
 
 function Item(props) {
+  const navigate = useNavigate();
+  
+  const clickItem = function(idx) {
+    navigate('/detail/' + idx);
+  }
+
   return (
-    <div className="col-md-4">
+    <div className="col-md-4" onClick={ (idx)=>{clickItem(props.item.id)} }>
       <img alt="상품이미지" src={`/cat${props.item.id}.jpeg`} width={"100%"}></img>
       <h4>상품명: {props.item.title} (고용번호: {props.item['id']})</h4>
       <p>상품설명: {props.item['content']}</p>
