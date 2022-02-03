@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import './Detail.scss'
+let BOX = styled.div`
+  padding :20px;
+`;
+
+let TITLE = styled.h4`
+  font-size : 25px;
+  color : ${ props => props.color }
+`;
 
 function Detail(props) {
     const navigate = useNavigate();
@@ -25,6 +35,12 @@ function Detail(props) {
 
     return (
       <div className="container">
+        <BOX>
+          <TITLE className="gray">DETAIL PAGE</TITLE>
+        </BOX>
+        <div className='my-alert'>
+          <p>이 고양이는 언제 도망갈지 모릅니다.. 빨리 고용하세요!</p>
+        </div>
         <div className="row">
           <div className="col-md-6">
             <img src={ `/cat${itemObj.id}.jpeg` } width="100%"></img>
