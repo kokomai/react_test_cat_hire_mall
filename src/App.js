@@ -9,8 +9,10 @@ import { useNavigate, Routes, Route } from 'react-router-dom';
 import { Detail } from './Detail';
 import axios from 'axios';
 
+
 function App() {
   const [items, setItems] = useState([]);
+  let [amount, setAmount] = useState([10, 11, 12]);
 
   // axios 호출시 useEffect 사용
   useEffect(() => {
@@ -68,7 +70,7 @@ function App() {
         <Route path="/detail/:id"
           element=
           {
-              <Detail item={items}/>
+              <Detail item={items} amount={amount} setAmount={setAmount}/>
           }>
         </Route>
       </Routes>

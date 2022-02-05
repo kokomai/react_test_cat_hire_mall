@@ -15,23 +15,33 @@ function Detail(props) {
     const navigate = useNavigate();
     const { id } = useParams();
     const [itemObj, setItemObj] = useState({}); 
+    const [itemIdx, setItemIdx] = useState(0); 
     console.log(props);
 
     const searchItem = function() {
         let list = props.item;
         let result = {};
+        let resultIdx = 0;
         console.log(list);
-        for(let item of list) {
-           if(item.id === Math.round(id)) {
-               result = item;
-               break;
-           } 
+        for(let [idx, item] of list.entries()) {
+          if(item.id === Math.round(id)) {
+            result = item;
+            resultIdx = idx;
+            break;
+          } 
         }
         setItemObj(result);
+        setItemIdx(resultIdx);
     }
     useEffect(()=> {
       searchItem();
     }) 
+
+    const hireClick = function() {
+      let list = [...props.amount];
+      list[itemIdx] = list[itemIdx] -1;
+      props.setAmount(list);
+    }
 
     return (
       <div className="container">
@@ -49,12 +59,21 @@ function Detail(props) {
             <h4 className="col-md-6 mt-4">{itemObj.title}</h4>
             <p>{itemObj.content}</p>
             <p>{itemObj.price}</p>
-            <button className="btn btn-danger">고용하기</button>
+            
+            <AmountInfo amount={props.amount} id={id}></AmountInfo>
+
+            <button className="btn btn-danger" onClick={ ()=>{hireClick();} }>고용하기</button>
             <button className="btn btn-primary" onClick={ ()=>{ navigate(-1) } }>뒤로가기</button>
           </div>
         </div>
       </div>
     )
+}
+
+function AmountInfo(props) {
+  return (
+    <p> 남은 껄룩이 수  : {props.amount[props.id]} </p>
+  );
 }
 
 export {Detail}
