@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.scss'
+import { amountContext } from './App'
 let BOX = styled.div`
   padding :20px;
 `;
@@ -16,6 +17,8 @@ function Detail(props) {
     const { id } = useParams();
     const [itemObj, setItemObj] = useState({}); 
     const [itemIdx, setItemIdx] = useState(0); 
+    const innerAmount = useContext(amountContext);
+    console.log(innerAmount);
     console.log(props);
 
     const searchItem = function() {
@@ -38,7 +41,8 @@ function Detail(props) {
     }) 
 
     const hireClick = function() {
-      let list = [...props.amount];
+
+      let list = [...innerAmount];
       list[itemIdx] = list[itemIdx] -1;
       props.setAmount(list);
     }
@@ -59,8 +63,7 @@ function Detail(props) {
             <h4 className="col-md-6 mt-4">{itemObj.title}</h4>
             <p>{itemObj.content}</p>
             <p>{itemObj.price}</p>
-            
-            <AmountInfo amount={props.amount} id={id}></AmountInfo>
+            <AmountInfo amount={innerAmount} id={id}></AmountInfo>
 
             <button className="btn btn-danger" onClick={ ()=>{hireClick();} }>고용하기</button>
             <button className="btn btn-primary" onClick={ ()=>{ navigate(-1) } }>뒤로가기</button>
